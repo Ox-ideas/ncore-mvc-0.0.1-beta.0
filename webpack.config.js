@@ -8,6 +8,22 @@ const _clean_webpack = require('clean-webpack-plugin');
 
 const _build_path = path.resolve(__dirname, 'wwwroot');
 
+let _pathsToClean = [
+  'wwwroot'
+]
+
+let _cleanOptions = {
+  root:     __dirname,
+  exclude:  [
+    'favicon.ico',
+    'images',
+    'lib'
+  ],
+  verbose: true,
+  dry: false,
+  allowExternal: false
+}
+
 module.exports = {
   //entry: { main: './src/js/app-0.1.js' },
   entry: [
@@ -97,6 +113,7 @@ module.exports = {
     new _html_webpack({
       template: 'src/index.html',
     }),
-    new _clean_webpack(['wwwroot'])
+    //new _clean_webpack(['wwwroot'])
+    new _clean_webpack(_pathsToClean, _cleanOptions)
   ]
 };
