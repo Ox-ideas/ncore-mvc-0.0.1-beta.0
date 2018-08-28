@@ -1,2 +1,2 @@
-# ncore-mvc-0.0.1-beta.0
-tryouts > .net core mvc webpack bootstrap
+# webpack-mdb-boilerplate
+tryouts > webpack bootstrap4 + mdb
