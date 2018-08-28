@@ -6,6 +6,8 @@ const _mini_css = require('mini-css-extract-plugin');
 const _html_webpack = require('html-webpack-plugin');
 const _clean_webpack = require('clean-webpack-plugin');
 
+const _build_path = path.resolve(__dirname, 'wwwroot');
+
 module.exports = {
   //entry: { main: './src/js/app-0.1.js' },
   entry: [
@@ -14,8 +16,8 @@ module.exports = {
     './src/vendors/mdb/scss/mdb.scss'
   ],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle-0.1.js'
+    path: _build_path,
+    filename: 'js/bundle-0.1.js'
   },
   module: {
     rules: [
@@ -42,8 +44,16 @@ module.exports = {
           use: ['css-loader', 'sass-loader']
         })*/
         use: [
-          'style-loader', _mini_css.loader, 
-          'css-loader', 'postcss-loader', 'sass-loader'
+          { loader: 'style-loader' },
+          { 
+            loader: _mini_css.loader,
+            options: { 
+              publicPath: '../'
+            }
+          },
+          { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
+          { loader: 'sass-loader' }
         ]
       },
       {
@@ -60,7 +70,7 @@ module.exports = {
       {
         test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         exclude: [/node_modules/, /img/],
-        loader: 'file-loader?name=font/roboto/[name].[ext]',
+        loader: 'file-loader?name=fonts/roboto/[name].[ext]'        
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -74,7 +84,9 @@ module.exports = {
   },
   plugins: [
     new _extract_text({ filename: 'bundle-0.1.css'}),
-    new _mini_css({ filename: 'bundle-0.1.css'}),
+    new _mini_css({
+      filename: 'css/bundle-0.1.css'
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -85,6 +97,6 @@ module.exports = {
     new _html_webpack({
       template: 'src/index.html',
     }),
-    new _clean_webpack(['dist'])
+    new _clean_webpack(['wwwroot'])
   ]
 };
