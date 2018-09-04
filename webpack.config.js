@@ -5,6 +5,7 @@ const _extract_text = require('extract-text-webpack-plugin');
 const _mini_css = require('mini-css-extract-plugin');
 const _html_webpack = require('html-webpack-plugin');
 const _clean_webpack = require('clean-webpack-plugin');
+const _bundle_analyze = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const _build_path = path.resolve(__dirname, 'wwwroot');
 
@@ -114,6 +115,7 @@ module.exports = {
       template: 'src/index.html',
     }),
     //new _clean_webpack(['wwwroot'])
-    new _clean_webpack(_pathsToClean, _cleanOptions)
+    new _clean_webpack(_pathsToClean, _cleanOptions),
+    new _bundle_analyze()
   ]
 };
